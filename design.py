@@ -1,3 +1,4 @@
+import random
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -10,6 +11,7 @@ def connect_dots_x_axis(ax, x, y, phrase):
     dot_connections = []
     dot_index = 0
     vowels = 'aeiou'
+    print(f"X-Axis Phrase {phrase}")
 
     x_index_min = 0
     x_index_max = get_grid_size(phrase)
@@ -39,6 +41,7 @@ def connect_dots_y_axis(ax, x, y, phrase):
     dot_connections = []
     dot_index = 0
     vowels = 'aeiou'
+    print(f" Y-Axis Phrase {phrase}")
 
     x_index_min = 0
     x_index_max = get_grid_size(phrase)
@@ -84,8 +87,8 @@ if __name__ == '__main__':
         print(my_phrase)
         # Random English phrase
         original_phrase = my_phrase
-        phrase = original_phrase.replace(' ', '')
-        GRID_SIZE = get_grid_size(phrase)
+        y_phrase = original_phrase.replace(' ', '')
+        GRID_SIZE = get_grid_size(y_phrase)
         # Create 50x50 grid of dots
         x = np.arange(0, GRID_SIZE)
         y = np.arange(0, GRID_SIZE)
@@ -95,24 +98,25 @@ if __name__ == '__main__':
         x_flat = X.flatten()
         y_flat = Y.flatten()
 
-        filename = phrase + '.jpeg'
+        filename = y_phrase + '.jpeg'
 
         # Adjust the phrase length to match the grid size
-        while len(phrase) < GRID_SIZE:
-            phrase += original_phrase.replace(' ', '')
+        while len(y_phrase) < GRID_SIZE:
+            y_phrase += original_phrase.replace(' ', '')
         
-        phrase = phrase[:GRID_SIZE]  # Trim the phrase to match the grid size
+        y_phrase = y_phrase[:GRID_SIZE]  # Trim the phrase to match the grid size
     
         # Plot the dots
         fig, ax = plt.subplots()
         ax.plot(x_flat, y_flat, 'ko', markersize=2)
         
         # Connect the dots based on the rules along y axis
-        connect_dots_y_axis(ax, x_flat, y_flat, phrase)
+        connect_dots_y_axis(ax, x_flat, y_flat, y_phrase)
+
+        x_phrase = random.choice(phrases)
 
         # Connect the dots based on the rules along x axis
-        connect_dots_x_axis(ax, x_flat, y_flat, phrase)
-
+        connect_dots_x_axis(ax, x_flat, y_flat, x_phrase)
 
         ax.set_aspect('equal', 'box')
         ax.set_xticks([])
