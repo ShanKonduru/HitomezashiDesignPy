@@ -4,7 +4,7 @@ import numpy as np
 import consts
 
 def get_grid_size(phrase):
-    return len(phrase)
+    return len(phrase) + 1
 
 def connect_dots_x_axis(ax, x, y, phrase):
     dot_connections = []
@@ -76,7 +76,8 @@ if __name__ == '__main__':
         "Fortune favors the bold",
         "Good things come to those who wait",
         "Honesty is the best policy",
-        "It's a piece of cake"
+        "It's a piece of cake",
+        "aeiou"
         ]
 
     for my_phrase in phrases:
@@ -120,4 +121,4 @@ if __name__ == '__main__':
         ax.set_ylim(-1, GRID_SIZE)
         ax.set_facecolor('blue')  # Set background color to blue
         plt.savefig(f'{filename}')
-        plt.show()
+        # plt.show()
