@@ -1,18 +1,51 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-def connect_dots(ax, x, y, phrase):
+import consts
+
+def get_grid_size(phrase):
+    return len(phrase)
+
+def connect_dots_x_axis(ax, x, y, phrase):
     dot_connections = []
     dot_index = 0
     vowels = 'aeiou'
 
     x_index_min = 0
-    x_index_max = 50
+    x_index_max = get_grid_size(phrase)
 
     y_index_min = 0
-    y_index_max = 50
+    y_index_max = get_grid_size(phrase)
 
+    for i in range(y_index_min, len(phrase)):
+        char = phrase[dot_index % len(phrase)].lower()
+        px = x_index_min
+        py = i
+
+        if char in vowels:
+            for j in range(x_index_min, x_index_max, 2):
+                px = j
+                dot_connections.extend([(px, py), (px+1, py)])
+        else:
+            for j in range(x_index_min, x_index_max, 2):
+                px = j
+                dot_connections.extend([(px+1, py), (px+2, py)])
+        dot_index += 1
     
+    for i in range(0, len(dot_connections), 2):
+        ax.plot([dot_connections[i][0], dot_connections[i+1][0]], [dot_connections[i][1], dot_connections[i+1][1]], 'w-', linewidth=0.5)
+
+def connect_dots_y_axis(ax, x, y, phrase):
+    dot_connections = []
+    dot_index = 0
+    vowels = 'aeiou'
+
+    x_index_min = 0
+    x_index_max = get_grid_size(phrase)
+
+    y_index_min = 0
+    y_index_max = get_grid_size(phrase)
+
     for i in range(x_index_min, len(phrase)):
         char = phrase[dot_index % len(phrase)].lower()
         px = i
@@ -32,31 +65,59 @@ def connect_dots(ax, x, y, phrase):
         ax.plot([dot_connections[i][0], dot_connections[i+1][0]], [dot_connections[i][1], dot_connections[i+1][1]], 'w-', linewidth=0.5)
 
 if __name__ == '__main__':
-    # Create 50x50 grid of dots
-    x = np.arange(0, 50)
-    y = np.arange(0, 50)
-    X, Y = np.meshgrid(x, y)
-        
-    # Flatten the grid
-    x_flat = X.flatten()
-    y_flat = Y.flatten()
-    
-    # Random English phrase
-    phrase = "The quick brown fox jumps over the lazy dog"
-    
-    phrase = phrase.replace(' ', '')
 
-    # Plot the dots
-    fig, ax = plt.subplots()
-    ax.plot(x_flat, y_flat, 'ko', markersize=2)
+    phrases = [
+        "The quick brown fox jumps over the lazy dog",
+        "A stitch in time saves nine",
+        "Beauty is in the eye of the beholder",
+        "Actions speak louder than words",
+        "Don't count your chickens before they hatch",
+        "Every cloud has a silver lining",
+        "Fortune favors the bold",
+        "Good things come to those who wait",
+        "Honesty is the best policy",
+        "It's a piece of cake"
+        ]
+
+    for my_phrase in phrases:
+        print(my_phrase)
+        # Random English phrase
+        original_phrase = my_phrase
+        phrase = original_phrase.replace(' ', '')
+        GRID_SIZE = get_grid_size(phrase)
+        # Create 50x50 grid of dots
+        x = np.arange(0, GRID_SIZE)
+        y = np.arange(0, GRID_SIZE)
+        X, Y = np.meshgrid(x, y)
+            
+        # Flatten the grid
+        x_flat = X.flatten()
+        y_flat = Y.flatten()
+
+        filename = phrase + '.jpeg'
+
+        # Adjust the phrase length to match the grid size
+        while len(phrase) < GRID_SIZE:
+            phrase += original_phrase.replace(' ', '')
+        
+        phrase = phrase[:GRID_SIZE]  # Trim the phrase to match the grid size
     
-    # Connect the dots based on the rules
-    connect_dots(ax, x_flat, y_flat, phrase)
-    
-    ax.set_aspect('equal', 'box')
-    ax.set_xticks([])
-    ax.set_yticks([])
-    ax.set_xlim(-1, 50)
-    ax.set_ylim(-1, 50)
-    ax.set_facecolor('blue')  # Set background color to blue
-    plt.show()
+        # Plot the dots
+        fig, ax = plt.subplots()
+        ax.plot(x_flat, y_flat, 'ko', markersize=2)
+        
+        # Connect the dots based on the rules along y axis
+        connect_dots_y_axis(ax, x_flat, y_flat, phrase)
+
+        # Connect the dots based on the rules along x axis
+        connect_dots_x_axis(ax, x_flat, y_flat, phrase)
+
+
+        ax.set_aspect('equal', 'box')
+        ax.set_xticks([])
+        ax.set_yticks([])
+        ax.set_xlim(-1, GRID_SIZE)
+        ax.set_ylim(-1, GRID_SIZE)
+        ax.set_facecolor('blue')  # Set background color to blue
+        plt.savefig(f'{filename}')
+        plt.show()
