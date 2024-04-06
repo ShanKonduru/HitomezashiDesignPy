@@ -36,7 +36,7 @@ def connect_dots_x_axis(ax, x, y, phrase):
     
     for i in range(0, len(dot_connections), 2):
         ax.plot([dot_connections[i][0], dot_connections[i+1][0]], [dot_connections[i][1], dot_connections[i+1][1]], 'w-', linewidth=0.5)
-
+        
 def connect_dots_y_axis(ax, x, y, phrase):
     dot_connections = []
     dot_index = 0
@@ -66,7 +66,7 @@ def connect_dots_y_axis(ax, x, y, phrase):
     
     for i in range(0, len(dot_connections), 2):
         ax.plot([dot_connections[i][0], dot_connections[i+1][0]], [dot_connections[i][1], dot_connections[i+1][1]], 'w-', linewidth=0.5)
-
+        
 if __name__ == '__main__':
 
     phrases = [
@@ -81,7 +81,7 @@ if __name__ == '__main__':
         "Honesty is the best policy",
         "It's a piece of cake",
         "aeiou"
-        ]
+    ]
 
     for my_phrase in phrases:
         print(my_phrase)
@@ -113,7 +113,7 @@ if __name__ == '__main__':
         # Connect the dots based on the rules along y axis
         connect_dots_y_axis(ax, x_flat, y_flat, y_phrase)
 
-        x_phrase = random.choice(phrases)
+        x_phrase = y_phrase # random.choice(phrases)
 
         # Connect the dots based on the rules along x axis
         connect_dots_x_axis(ax, x_flat, y_flat, x_phrase)
@@ -124,5 +124,5 @@ if __name__ == '__main__':
         ax.set_xlim(-1, GRID_SIZE)
         ax.set_ylim(-1, GRID_SIZE)
         ax.set_facecolor('blue')  # Set background color to blue
-        plt.savefig(f'{filename}')
+        plt.savefig(f'./Output/{filename}')
         # plt.show()
