@@ -57,7 +57,16 @@ if __name__ == '__main__':
         "Good things come to those who wait",
         "Honesty is the best policy",
         "It's a piece of cake",
-        "aeiou"
+        "The King of Kings",
+        "The Queen of My Heart",
+        "Shan Konduru",
+        "Ravi Bhushan Sarma Konduru",
+        "Indu Kiran Konduru",
+        "Sri Kari Sarma Konduru",
+        "Trinaaga Sri Kari sarma Konduru",
+        "Ohm Namah Shivaya",
+        "Ohm Gam Ganapathaye Namaha",
+        "Sri Matre Namaha"
     ]
 
     for my_phrase in phrases:
